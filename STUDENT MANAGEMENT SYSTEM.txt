@@ -1,0 +1,115 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+class Student {
+    private int id;
+    private String name;
+    private int age;
+    private String grade;
+    public Student(int id, String name, int age, String grade) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.grade = grade;
+    }
+
+        public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+       public void displayInfo() {
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Grade: " + grade);
+    }
+}
+
+public class StudentManagementSystem {
+    private ArrayList<Student> students = new ArrayList<>();
+    private Scanner scanner = new Scanner(System.in);
+
+       public void addStudent() {
+        System.out.println("\nEnter Student Details:");
+        System.out.print("ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        System.out.print("Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        System.out.print("Grade: ");
+        String grade = scanner.nextLine();
+
+        Student student = new Student(id, name, age, grade);
+        students.add(student);
+        System.out.println("Student added successfully!");
+    }
+    public void viewStudent() {
+        System.out.print("\nEnter Student ID to view details: ");
+        int id = scanner.nextInt();
+
+        for (Student student : students) {
+            if (student.getId() == id) {
+                System.out.println("\nStudent Details:");
+                student.displayInfo();
+                return;
+            }
+        }
+        System.out.println("Student not found!");
+    }
+    public void listStudents() {
+        if (students.isEmpty()) {
+            System.out.println("\nNo students available.");
+        } else {
+            System.out.println("\nList of Students:");
+            for (Student student : students) {
+                System.out.println("ID: " + student.getId() + ", Name: " + student.getName());
+            }
+        }
+    }
+    public void menu() {
+        while (true) {
+            System.out.println("\nStudent Management System:");
+            System.out.println("1. Add Student");
+            System.out.println("2. View Student");
+            System.out.println("3. List All Students");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    addStudent();
+                    break;
+                case 2:
+                    viewStudent();
+                    break;
+                case 3:
+                    listStudents();
+                    break;
+                case 4:
+                    System.out.println("Exiting the system. Goodbye!");
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+    public static void main(String[] args) {
+    StudentManagementSystem sms = new StudentManagementSystem();
+    sms.menu();
+    }
+}
